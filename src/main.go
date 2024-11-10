@@ -32,9 +32,14 @@ func main() {
 
 	router.GET("/api/authors", GetAuthors)
 	router.GET("/api/authors/:id", GetAuthorByID)
-	router.POST("/api/authors", PostAuthor)
-	router.PUT("/api/authors/:id", PutAuthor)
+	router.POST("/api/authors", CreateAuthor)
+	router.PUT("/api/authors/:id", UpdateAuthor)
 	router.DELETE("/api/authors/:id", DeleteAuthor)
+
+	router.GET("/api/books/:id", GetBooksByAuthorID)
+	router.POST("/api/books", CreateBook)
+	router.PUT("/api/books/:id", UpdateBook)
+	router.DELETE("/api/books/:id", DeleteBook)
 
 	router.Run(":8080")
 }

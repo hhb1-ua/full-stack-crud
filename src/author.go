@@ -37,7 +37,7 @@ func GetAuthorByID(c *gin.Context) {
 	c.JSON(http.StatusOK, author)
 }
 
-func PostAuthor(c *gin.Context) {
+func CreateAuthor(c *gin.Context) {
 	var author Author
 
 	if err := c.BindJSON(&author); err != nil {
@@ -53,7 +53,7 @@ func PostAuthor(c *gin.Context) {
 	c.JSON(http.StatusOK, author)
 }
 
-func PutAuthor(c *gin.Context) {
+func UpdateAuthor(c *gin.Context) {
 	var author Author
 
 	if err := db.First(&author, c.Param("id")).Error; err != nil {
