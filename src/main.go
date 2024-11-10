@@ -25,10 +25,8 @@ func main() {
 		if err != nil {
 			panic("Failed to connect to database")
 		}
+		db.AutoMigrate(&Author{}, &Book{})
 	}
-
-	db.AutoMigrate(&Author{})
-	db.AutoMigrate(&Book{})
 
 	router := gin.Default()
 

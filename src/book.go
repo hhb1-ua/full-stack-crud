@@ -18,9 +18,8 @@ const (
 
 type Book struct {
 	ID          uint      `json:"id"`
-	Title       string    `json:"title"`
-	Description *string   `json:"description"`
-	Category    Category  `json:"category"`
-	Publication time.Time `json:"publication"`
-	AuthorID    uint      `json:"author"`
+	Title       string    `json:"title" binding:"required"`
+	Category    Category  `json:"category" binding:"required"`
+	Publication time.Time `json:"publication" binding:"required"`
+	AuthorID    uint      `json:"author" binding:"required"`
 }
