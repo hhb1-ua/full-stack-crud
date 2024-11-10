@@ -22,7 +22,8 @@ func main() {
 		panic("Failed to connect to database")
 	}
 
-	db.DryRun = true
+	db.AutoMigrate(&Customer{})
+	db.Create(&Customer{Name: "Hugo", Email: "hugo@mail.com"})
 
 	fmt.Println("Connected to the database successfully")
 }
