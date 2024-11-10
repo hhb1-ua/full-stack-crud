@@ -2,8 +2,6 @@ package main
 
 import (
 	"time"
-
-	"gorm.io/gorm"
 )
 
 type Category string
@@ -19,10 +17,10 @@ const (
 )
 
 type Book struct {
-	gorm.Model
-	Title       string
-	Description *string
-	Category    Category
-	Publication time.Time
-	AuthorID    uint
+	ID          uint      `json:"id"`
+	Title       string    `json:"title"`
+	Description *string   `json:"description"`
+	Category    Category  `json:"category"`
+	Publication time.Time `json:"publication"`
+	AuthorID    uint      `json:"author"`
 }
