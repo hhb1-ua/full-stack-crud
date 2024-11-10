@@ -1,0 +1,38 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: fsc-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=database
+    healthcheck:
+      test: /usr/local/bin/pg_isready -d ${POSTGRES_DB} -U ${POSTGRES_USER}
+      interval: 5s
+      timeout: 10s
+      retries: 5
+    networks:
+      - fsc-network
+
+  backend:
+    build: .
+    container_name: fsc-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=database
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - fsc-network
+
+networks:
+  fsc-network:
+    driver: bridge
