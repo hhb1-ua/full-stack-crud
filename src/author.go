@@ -6,9 +6,10 @@ import (
 	"gorm.io/gorm"
 )
 
-type Customer struct {
+type Author struct {
 	gorm.Model
 	Name     string
 	Email    string
 	Birthday *time.Time
+	Books    []Book
 }

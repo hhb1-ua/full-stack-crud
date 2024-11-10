@@ -16,14 +16,13 @@ func main() {
 		os.Getenv("DB_PASSWORD"),
 		os.Getenv("DB_NAME"),
 	)
+
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
 		panic("Failed to connect to database")
 	}
 
-	db.AutoMigrate(&Customer{})
-	db.Create(&Customer{Name: "Hugo", Email: "hugo@mail.com"})
-
-	fmt.Println("Connected to the database successfully")
+	db.AutoMigrate(&Author{})
+	db.AutoMigrate(&Book{})
 }
