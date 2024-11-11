@@ -12,7 +12,7 @@ type Author struct {
 	Name     string     `json:"name" binding:"required"`
 	Email    string     `json:"email" binding:"required,email"`
 	Birthday *time.Time `json:"birthday" binding:"required"`
-	Books    []Book     `json:"books" binding:"required"`
+	Books    []Book     `json:"books" binding:"required" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL"`
 }
 
 func GetAuthors(c *gin.Context) {
@@ -29,7 +29,7 @@ func GetAuthors(c *gin.Context) {
 func GetAuthorByID(c *gin.Context) {
 	var author Author
 
-	if err := db.First(&author, c.Param("id")).Error; err != nil {
+	if err := db.Preload("Books").First(&author, c.Param("id")).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Author not found"})
 		return
 	}

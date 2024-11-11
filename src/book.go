@@ -24,7 +24,7 @@ type Book struct {
 	Title       string    `json:"title" binding:"required"`
 	Category    Category  `json:"category" binding:"required"`
 	Publication time.Time `json:"publication" binding:"required"`
-	AuthorID    uint      `json:"author" binding:"required"`
+	AuthorID    uint      `json:"author_id" binding:"required"`
 }
 
 func GetBooksByAuthorID(c *gin.Context) {
