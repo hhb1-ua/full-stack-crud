@@ -27,10 +27,19 @@ type Book struct {
 	AuthorID    uint      `json:"author_id" binding:"required"`
 }
 
+func isValidCategory(cat Category) bool {
+	switch cat {
+	case Unknown, Fantasy, Fiction, Romance, Horror, Thriller, Mystery:
+		return true
+	default:
+		return false
+	}
+}
+
 func GetBooksByAuthorID(c *gin.Context) {
 	var books []Book
 
-	if err := db.Find(&books).Where("AuthorID == ?", c.Param("id")).Error; err != nil {
+	if err := db.Find(&books).Where("author_id == ?", c.Param("id")).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Couldn't fetch from author"})
 		return
 	}
@@ -43,6 +52,11 @@ func CreateBook(c *gin.Context) {
 
 	if err := c.BindJSON(&book); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if !isValidCategory(book.Category) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Category must belong to Unknown, Fantasy, Fiction, Romance, Horror, Thriller, Mystery"})
 		return
 	}
 
@@ -64,6 +78,11 @@ func UpdateBook(c *gin.Context) {
 
 	if err := c.BindJSON(&book); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if !isValidCategory(book.Category) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Category must belong to Unknown, Fantasy, Fiction, Romance, Horror, Thriller, Mystery"})
 		return
 	}
 
