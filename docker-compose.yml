@@ -19,9 +19,9 @@ services:
     networks:
       - fsc-network
 
-  backend:
+  server:
     build: ./src
-    container_name: fsc-backend
+    container_name: fsc-server
     ports:
       - "8080:8080"
     environment:

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -30,16 +31,25 @@ func main() {
 
 	router := gin.Default()
 
-	router.GET("/api/authors", GetAuthors)
-	router.GET("/api/authors/:id", GetAuthorByID)
-	router.POST("/api/authors", CreateAuthor)
-	router.PUT("/api/authors/:id", UpdateAuthor)
-	router.DELETE("/api/authors/:id", DeleteAuthor)
+	router.StaticFS("/static", http.Dir("dist"))
 
-	router.GET("/api/books/:id", GetBooksByAuthorID)
-	router.POST("/api/books", CreateBook)
-	router.PUT("/api/books/:id", UpdateBook)
-	router.DELETE("/api/books/:id", DeleteBook)
+	router.GET("/", func(ctx *gin.Context) {
+		ctx.File("dist/index.html")
+	})
+
+	api := router.Group("/api")
+	{
+		api.GET("api/authors", GetAuthors)
+		api.GET("api/authors/:id", GetAuthorByID)
+		api.POST("api/authors", CreateAuthor)
+		api.PUT("api/authors/:id", UpdateAuthor)
+		api.DELETE("api/authors/:id", DeleteAuthor)
+
+		api.GET("api/books/:id", GetBooksByAuthorID)
+		api.POST("api/books", CreateBook)
+		api.PUT("api/books/:id", UpdateBook)
+		api.DELETE("api/books/:id", DeleteBook)
+	}
 
 	router.Run(":8080")
 }
