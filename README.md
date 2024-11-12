@@ -5,4 +5,4 @@ GoLang backend which serves a Vue SPA and provides a simple REST API to interact
 * The Vue SPA is built into a single `index.html` file, which contains the necessary JS and CSS. This is good for very simple applications, but it's a bad design choice for bigger pages, as it'll take longer to load.
 
 ## Building and running
-First, build the Vue SPA inside `src/app` running `npm i` and `npm run build`. Then, start the application by running `docker compose up` inside the root directory.
+First, build the Vue SPA inside `src/app` running `npm i` and `npm run build`. Then, start the application by running `docker compose up` inside the root directory. The server listens on `localhost:8080` by default.
