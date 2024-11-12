@@ -3,6 +3,7 @@ export type Author = {
   name: string;
   email: string;
   birthday: string;
+  books?: Array<Book>;
 };
 
 export type Book = {
