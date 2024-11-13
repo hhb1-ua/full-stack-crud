@@ -30,8 +30,6 @@ func main() {
 
 	router := gin.Default()
 
-	// router.StaticFS("/static", http.Dir("dist"))
-
 	router.GET("/", func(ctx *gin.Context) {
 		ctx.File("dist/index.html")
 	})
