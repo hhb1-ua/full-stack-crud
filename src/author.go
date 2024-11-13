@@ -19,7 +19,7 @@ func GetAuthors(c *gin.Context) {
 	var authors []Author
 
 	if err := db.Find(&authors).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Couldn't fetch the authors"})
+		c.JSON(http.StatusNotFound, gin.H{"message": "Couldn't fetch the authors"})
 		return
 	}
 
@@ -30,7 +30,7 @@ func GetAuthorByID(c *gin.Context) {
 	var author Author
 
 	if err := db.Preload("Books").First(&author, c.Param("id")).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Author not found"})
+		c.JSON(http.StatusNotFound, gin.H{"message": "Author not found"})
 		return
 	}
 
@@ -41,12 +41,12 @@ func CreateAuthor(c *gin.Context) {
 	var author Author
 
 	if err := c.BindJSON(&author); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
 	}
 
 	if err := db.Create(&author).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Couldn't create author"})
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Couldn't create author"})
 		return
 	}
 
@@ -57,17 +57,17 @@ func UpdateAuthor(c *gin.Context) {
 	var author Author
 
 	if err := db.First(&author, c.Param("id")).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Author not found"})
+		c.JSON(http.StatusNotFound, gin.H{"message": "Author not found"})
 		return
 	}
 
 	if err := c.BindJSON(&author); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
 	}
 
 	if err := db.Save(&author).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Couldn't update author"})
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Couldn't update author"})
 		return
 	}
 
@@ -78,12 +78,12 @@ func DeleteAuthor(c *gin.Context) {
 	var author Author
 
 	if err := db.First(&author, c.Param("id")).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Author not found"})
+		c.JSON(http.StatusNotFound, gin.H{"message": "Author not found"})
 		return
 	}
 
 	if err := db.Delete(&author).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Couldn't delete author"})
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Couldn't delete author"})
 		return
 	}
 
