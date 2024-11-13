@@ -11,3 +11,7 @@ export type Book = {
   title: string;
   category: 'Unknown' | 'Fantasy' | 'Fiction' | 'Romance' | 'Horror' | 'Thriller' | 'Mistery';
 };
+
+export type Message = {
+  message: string;
+}
